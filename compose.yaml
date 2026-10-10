@@ -25,6 +25,7 @@ services:
 
     volumes:
       - ${HOME}/ros2_ws/src:/home/${HOST_USER}/ros2_ws/src
+      - ${HOME}/ros2_ws/Dev-Doc:/home/${HOST_USER}/ros2_ws/Dev-Doc
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
 
     stdin_open: true

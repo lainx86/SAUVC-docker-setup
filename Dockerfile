@@ -1,5 +1,7 @@
 FROM osrf/ros:lyrical-desktop-full
 
+LABEL maintainer="feby <feby@computer.org>"
+
 ARG USERNAME=lain
 ARG USER_UID=1000
 ARG USER_GID=1000
