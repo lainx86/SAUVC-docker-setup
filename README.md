@@ -103,6 +103,7 @@ DISPLAY=$DISPLAY
 HOME=$HOME
 VIDEO_GID=$(getent group video | cut -d: -f3)
 RENDER_GID=$(getent group render | cut -d: -f3)
+SERIAL_GID=$(stat -c %g /dev/ttyACM0)
 EOF
 ```
 
@@ -120,6 +121,7 @@ printf "HOST_USER=%s\nHOST_UID=%s\nHOST_GID=%s\nDISPLAY=%s\nHOME=%s\n" \
 
 printf "VIDEO_GID=%s\n" (getent group video | cut -d: -f3) >> .env
 printf "RENDER_GID=%s\n" (getent group render | cut -d: -f3) >> .env
+printf "SERIAL_GID=%s\n" (stat -c %g /dev/ttyACM0) >> .env
 ```
 
 Cek hasilnya:
@@ -138,9 +140,15 @@ DISPLAY=:0
 HOME=/home/lain
 VIDEO_GID=985
 RENDER_GID=989
+SERIAL_GID=984
 ```
 
-Nomor UID, GID, `VIDEO_GID`, dan `RENDER_GID` bisa berbeda di setiap komputer.
+Nomor UID, GID, `VIDEO_GID`, `RENDER_GID`, dan `SERIAL_GID` bisa berbeda di setiap komputer.
+
+Sambungkan Pixhawk sebelum membuat `.env` dan menjalankan Compose. Perangkat
+`/dev/ttyACM0` diteruskan ke container dengan grup akses yang diambil dari host.
+Setelah mengubah perangkat atau grup pada Compose, terapkan dengan
+`docker compose up -d --force-recreate ros2`. Image tidak perlu dibangun ulang.
 
 ---
 
@@ -173,6 +181,14 @@ docker compose build
 Build pertama bisa cukup lama karena Docker perlu mengunduh image ROS 2 beserta paket desktop.
 
 Build berikutnya biasanya lebih cepat karena file yang sudah pernah diunduh disimpan oleh Docker.
+
+Image menetapkan `RMW_IMPLEMENTATION=rmw_fastrtps_cpp` dan
+`FASTDDS_BUILTIN_TRANSPORTS=LARGE_DATA?max_msg_size=1MB&sockets_size=2MB&non_blocking=true`
+sebagai environment bawaan, sesuai `scripts/ros_env.sh` pada proyek Aterkia.
+Node, terminal baru (`docker exec`), dan daemon ROS CLI mewarisi konfigurasi
+yang sama. `scripts/ros_env.sh` tetap digunakan untuk terminal ROS di luar image
+ini. Jika konfigurasi komunikasi diubah, gunakan nilai yang sama pada semua
+terminal dan mulai ulang daemon ROS CLI.
 
 ---
 

@@ -74,3 +74,7 @@ USER ${USERNAME}
 RUN rosdep update --rosdistro "${ROS_DISTRO}"
 
 WORKDIR /home/${USERNAME}/ros2_ws
+
+# Keep ROS nodes and the CLI daemon on the same transport in every shell.
+ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp \
+    FASTDDS_BUILTIN_TRANSPORTS="LARGE_DATA?max_msg_size=1MB&sockets_size=2MB&non_blocking=true"

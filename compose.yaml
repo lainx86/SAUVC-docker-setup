@@ -21,10 +21,12 @@ services:
 
     devices:
       - /dev/dri:/dev/dri
+      - /dev/ttyACM0:/dev/ttyACM0
 
     group_add:
       - "${VIDEO_GID}"
       - "${RENDER_GID}"
+      - "${SERIAL_GID}"
 
     volumes:
       - ${HOME}/ros2_ws/src:/home/${HOST_USER}/ros2_ws/src
