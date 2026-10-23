@@ -1,6 +1,6 @@
-# ROS 2 Lyrical di Docker pada Arch Linux
+# ROS 2 Lyrical di Docker
 
-Panduan ini digunakan untuk menjalankan **ROS 2 Lyrical** di Docker pada **Arch Linux** tanpa perlu mengganti OS utama ke Ubuntu.
+Panduan ini digunakan untuk menjalankan **ROS 2 Lyrical**. Bisa untuk disstro apapun. Pada panduan ini menggunakan arch linux.
 
 Repository ini sudah menyediakan:
 
@@ -13,7 +13,7 @@ Panduan ini menyediakan contoh untuk **Bash** dan **Fish** pada host Arch.
 
 ---
 
-## Gambaran Setup
+## Gambaran Setup (contoh pada arch)
 
 ```text
 Arch Linux
@@ -78,11 +78,9 @@ Kalau `hello-world` berhasil, Docker sudah siap.
 ## 2. Clone Repository
 
 ```bash
-git clone <URL-REPOSITORY>
-cd <NAMA-REPOSITORY>
+git clone git@github.com:lainx86/SAUVC-docker-setup.git
+cd SAUVC-docker-setup
 ```
-
-Ganti `<URL-REPOSITORY>` dan `<NAMA-REPOSITORY>` sesuai repository GitHub yang digunakan.
 
 ---
 
